@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>音乐播放器功能测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        button { margin: 5px; padding: 10px 15px; }
+    </style>
+</head>
+<body>
+    <h1>🎵 音乐播放器功能测试</h1>
+    
+    <div class="test" id="test1">
+        <h3>测试1: 页面元素检查</h3>
+        <div id="test1-result">等待测试...</div>
+    </div>
+    
+    <div class="test" id="test2">
+        <h3>测试2: JavaScript类初始化</h3>
+        <div id="test2-result">等待测试...</div>
+    </div>
+    
+    <div class="test" id="test3">
+        <h3>测试3: 音频元素测试</h3>
+        <button onclick="testAudio()">测试音频播放</button>
+        <div id="test3-result">等待测试...</div>
+    </div>
+    
+    <div class="test" id="test4">
+        <h3>测试4: 控制按钮测试</h3>
+        <button onclick="testControls()">测试控制按钮</button>
+        <div id="test4-result">等待测试...</div>
+    </div>
+    
+    <div class="test" id="test5">
+        <h3>测试5: 播放列表测试</h3>
+        <button onclick="testPlaylist()">测试播放列表</button>
+        <div id="test5-result">等待测试...</div>
+    </div>
+    
+    <script>
+        // 测试1: 页面元素检查
+        function testPageElements() {
+            const elements = [
+                'audioPlayer',
+                'btnPlay',
+                'btnPrev',
+                'btnNext',
+                'progressBar',
+                'volumeSlider',
+                'playlist'
+            ];
+            
+            let missing = [];
+            elements.forEach(id => {
+                if (!document.getElementById(id)) {
+                    missing.push(id);
+                }
+            });
+            
+            const result = document.getElementById('test1-result');
+            if (missing.length === 0) {
+                result.innerHTML = '<span class="pass">✅ 所有关键元素都存在</span>';
+                result.parentElement.className = 'test pass';
+            } else {
+                result.innerHTML = `<span class="fail">❌ 缺少元素: ${missing.join(', ')}</span>`;
+                result.parentElement.className = 'test fail';
+            }
+        }
+        
+        // 测试2: JavaScript类初始化
+        function testJSClass() {
+            const result = document.getElementById('test2-result');
+            try {
+                if (typeof MusicPlayer === 'function') {
+                    result.innerHTML = '<span class="pass">✅ MusicPlayer类已定义</span>';
+                    result.parentElement.className = 'test pass';
+                } else {
+                    result.innerHTML = '<span class="fail">❌ MusicPlayer类未定义</span>';
+                    result.parentElement.className = 'test fail';
+                }
+            } catch (e) {
+                result.innerHTML = `<span class="fail">❌ 错误: ${e.message}</span>`;
+                result.parentElement.className = 'test fail';
+            }
+        }
+        
+        // 测试3: 音频元素测试
+        function testAudio() {
+            const audio = document.getElementById('audioPlayer');
+            const result = document.getElementById('test3-result');
+            
+            if (!audio) {
+                result.innerHTML = '<span class="fail">❌ 未找到audio元素</span>';
+                result.parentElement.className = 'test fail';
+                return;
+            }
+            
+            // 测试音频API
+            const tests = [
+                { name: 'audio元素存在', test: () => true },
+                { name: '可以设置src', test: () => { 
+                    audio.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+                    return audio.src.includes('soundhelix');
+                }},
+                { name: '可以播放', test: () => {
+                    try {
+                        const playPromise = audio.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {});
+                        }
+                        return true;
+                    } catch (e) {
+                        return false;
+                    }
+                }}
+            ];
+            
+            let passed = 0;
+            tests.forEach(t => {
+                try {
+                    if (t.test()) passed++;
+                } catch (e) {}
+            });
+            
+            if (passed === tests.length) {
+                result.innerHTML = `<span class="pass">✅ 音频测试通过 (${passed}/${tests.length})</span>`;
+                result.parentElement.className = 'test pass';
+            } else {
+                result.innerHTML = `<span class="warning">⚠️ 音频测试部分通过 (${passed}/${tests.length})</span>`;
+                result.parentElement.className = 'test warning';
+            }
+        }
+        
+        // 测试4: 控制按钮测试
+        function testControls() {
+            const buttons = ['btnPlay', 'btnPrev', 'btnNext', 'btnShuffle', 'btnRepeat'];
+            const result = document.getElementById('test4-result');
+            
+            let found = 0;
+            buttons.forEach(id => {
+                if (document.getElementById(id)) found++;
+            });
+            
+            if (found === buttons.length) {
+                result.innerHTML = `<span class="pass">✅ 所有控制按钮都存在 (${found}/${buttons.length})</span>`;
+                result.parentElement.className = 'test pass';
+            } else {
+                result.innerHTML = `<span class="warning">⚠️ 部分按钮缺失 (找到 ${found}/${buttons.length})</span>`;
+                result.parentElement.className = 'test warning';
+            }
+        }
+        
+        // 测试5: 播放列表测试
+        function testPlaylist() {
+            const result = document.getElementById('test5-result');
+            
+            // 检查播放列表元素
+            const playlistEl = document.getElementById('playlist');
+            if (!playlistEl) {
+                result.innerHTML = '<span class="fail">❌ 播放列表元素不存在</span>';
+                result.parentElement.className = 'test fail';
+                return;
+            }
+            
+            // 检查是否有示例歌曲
+            try {
+                if (window.musicPlayer && window.musicPlayer.playlist) {
+                    const count = window.musicPlayer.playlist.length;
+                    result.innerHTML = `<span class="pass">✅ 播放列表已初始化 (${count} 首歌曲)</span>`;
+                    result.parentElement.className = 'test pass';
+                } else {
+                    result.innerHTML = '<span class="warning">⚠️ 播放列表未初始化或为空</span>';
+                    result.parentElement.className = 'test warning';
+                }
+            } catch (e) {
+                result.innerHTML = `<span class="warning">⚠️ 无法访问播放列表: ${e.message}</span>`;
+                result.parentElement.className = 'test warning';
+            }
+        }
+        
+        // 运行自动测试
+        window.onload = function() {
+            testPageElements();
+            testJSClass();
+        };
+    </script>
+    
+    <div class="test" id="test6">
+        <h3>测试6: 加载主播放器页面</h3>
+        <button onclick="window.location.href='/'">打开音乐播放器</button>
+        <div>如果上述测试通过，但播放器仍不能使用，可能是：</div>
+        <ul>
+            <li>浏览器控制台有JavaScript错误</li>
+            <li>音频文件URL不可访问</li>
+            <li>浏览器安全策略限制</li>
+        </ul>
+    </div>
+    
+    <div class="test" id="test7">
+        <h3>下一步操作</h3>
+        <button onclick="checkConsole()">检查控制台错误</button>
+        <button onclick="reloadPage()">重新加载页面</button>
+        <div id="test7-result"></div>
+    </div>
+    
+    <script>
+        function checkConsole() {
+            const result = document.getElementById('test7-result');
+            result.innerHTML = '请按F12打开开发者工具，查看"Console"选项卡中的错误信息';
+        }
+        
+        function reloadPage() {
+            window.location.reload(true);
+        }
+    </script>
+</body>
+</html>

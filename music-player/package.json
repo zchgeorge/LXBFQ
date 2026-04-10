@@ -1,0 +1,66 @@
+{
+  "name": "openclaw-music-player",
+  "version": "1.0.0",
+  "description": "A modern, open-source web-based music player built with Node.js and vanilla JavaScript",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "simple": "node simple-server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/ tests/",
+    "format": "prettier --write \"src/**/*.{js,jsx}\" \"tests/**/*.{js,jsx}\" \"public/**/*.{js,html,css}\"",
+    "clean": "rm -rf node_modules uploads logs server.log server.pid",
+    "setup": "npm install && mkdir -p uploads logs"
+  },
+  "keywords": [
+    "music",
+    "player",
+    "audio",
+    "web",
+    "open-source",
+    "nodejs",
+    "javascript",
+    "html5-audio"
+  ],
+  "author": "OpenClaw Community",
+  "contributors": [
+    "OpenClaw AI Assistant <assistant@openclaw.ai>"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openclaw/openclaw-music-player.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openclaw/openclaw-music-player/issues"
+  },
+  "homepage": "https://github.com/openclaw/openclaw-music-player#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1",
+    "music-metadata": "^7.12.0",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "src/",
+    "public/",
+    "tests/",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "package.json"
+  ]
+}

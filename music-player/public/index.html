@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player - OpenClaw</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-music"></i> OpenClaw Music Player</h1>
+            <p class="subtitle">A modern web-based music player</p>
+        </header>
+
+        <!-- Main Player -->
+        <main class="player-container">
+            <!-- Album Art -->
+            <div class="album-art-section">
+                <div class="album-art" id="albumArt">
+                    <i class="fas fa-music album-placeholder"></i>
+                </div>
+                <div class="song-info" id="songInfo">
+                    <h2 class="song-title">No song selected</h2>
+                    <p class="song-artist">--</p>
+                    <p class="song-album">--</p>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-section">
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <span class="time-current" id="currentTime">0:00</span>
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="time-total" id="totalTime">0:00</span>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="control-buttons">
+                    <button class="btn-control" id="btnPrev" title="Previous">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button class="btn-control btn-play" id="btnPlay" title="Play">
+                        <i class="fas fa-play" id="playIcon"></i>
+                    </button>
+                    <button class="btn-control" id="btnNext" title="Next">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <button class="btn-control" id="btnRepeat" title="Repeat">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                    <button class="btn-control" id="btnShuffle" title="Shuffle">
+                        <i class="fas fa-random"></i>
+                    </button>
+                    <button class="btn-control" id="btnVolume" title="Volume">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+
+                <!-- Volume Control -->
+                <div class="volume-container" id="volumeContainer">
+                    <i class="fas fa-volume-down"></i>
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+            </div>
+
+            <!-- Playlist -->
+            <div class="playlist-section">
+                <div class="playlist-header">
+                    <h3><i class="fas fa-list"></i> Playlist</h3>
+                    <div class="playlist-actions">
+                        <button class="btn-action" id="btnAddSongs" title="Add Songs">
+                            <i class="fas fa-plus"></i> Add Songs
+                        </button>
+                        <button class="btn-action" id="btnClearPlaylist" title="Clear Playlist">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="playlist-container">
+                    <ul class="playlist" id="playlist">
+                        <li class="playlist-empty">No songs in playlist. Click "Add Songs" to add music.</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <!-- File Upload -->
+        <div class="upload-section" id="uploadSection">
+            <div class="upload-header">
+                <h3><i class="fas fa-upload"></i> Upload Music</h3>
+                <button class="btn-close" id="btnCloseUpload">×</button>
+            </div>
+            <div class="upload-content">
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <p>Drag & drop your music files here</p>
+                    <p class="upload-sub">or</p>
+                    <button class="btn-upload" id="btnSelectFiles">
+                        <i class="fas fa-folder-open"></i> Browse Files
+                    </button>
+                    <input type="file" id="fileInput" multiple accept="audio/*" style="display: none;">
+                </div>
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-text">Uploading: <span id="uploadFileName">file.mp3</span></div>
+                    <div class="progress-bar-upload">
+                        <div class="progress-fill-upload" id="uploadProgressFill"></div>
+                    </div>
+                    <div class="progress-percent" id="uploadPercent">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>OpenClaw Music Player v1.0.0 • Built with <i class="fas fa-heart"></i></p>
+            <p class="status" id="playerStatus">Ready</p>
+        </footer>
+    </div>
+
+    <!-- Audio Element (hidden) -->
+    <audio id="audioPlayer" preload="metadata"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
